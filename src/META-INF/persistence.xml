@@ -9,12 +9,12 @@
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/introsde" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://salaander.hopto.org:3306/introsde" />
 			<property name="eclipselink.logging.level" value="ALL" />
 			<property name="javax.persistence.jdbc.user" value="introsde" />
 			<!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
 			<!--<property name="eclipselink.ddl-generation.output-mode" value="database" />-->
-			<property name="javax.persistence.jdbc.password" value="introsde"/>
+			<property name="javax.persistence.jdbc.password" value="introSDE123!"/>
 		</properties>
 	</persistence-unit>
 	
