@@ -128,8 +128,8 @@
 	</target>
 	
 	<target name="start" depends="install">
-		<echo message="introsde.endpoint.WeatherPublisher in ${build.dir}" />
-		<java classname="introsde.endpoint.WeatherPublisher" classpath="${build.dir}" fork="true">
+		<echo message="introsde.app.App in ${build.dir}" />
+		<java classname="introsde.app.App" classpath="${build.dir}" fork="true">
 			<arg value="$JAVA_OPTS  -cp" />
 		    <classpath>
 		    	<path location="build" />
