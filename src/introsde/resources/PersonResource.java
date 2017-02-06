@@ -50,19 +50,8 @@ public class PersonResource {
 		Person person = this.getPersonById(id);
 		if (person == null)
 			throw new RuntimeException("Get: Person with " + id + " not found");
-		return person;
-	}
-
-	// for the browser
-	@GET
-	@Produces(MediaType.TEXT_XML)
-	public Person getPersonHTML() {
-		Person person = this.getPersonById(id);
-		if (person == null)
-			throw new RuntimeException("Get: Person with " + id + " not found");
-		System.out.println("Returning person... " + person.getId());
-		//person.setSteps(Step.getStepsForPerson(person.getId()));
-		return person;
+		return new PersonConnected(person);
+		//return person;
 	}
 
 	@PUT

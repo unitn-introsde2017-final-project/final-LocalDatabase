@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
 
 import introsde.dao.LifeCoachDao;
 
@@ -15,25 +14,41 @@ import introsde.dao.LifeCoachDao;
  */
 @Entity
 @Table(name="steps")
-@NamedQuery(name="Step.findAll", query="SELECT s FROM Step s")
+//@NamedQuery(name="Step.findAll", query="SELECT s FROM Step s")
+@NamedQueries({
+    @NamedQuery(name="Step.findAll",
+                query="SELECT s FROM Step s"),
+    @NamedQuery(name="Step.findForPerson",
+                query="SELECT s FROM Step s WHERE s.personId = ?1"),
+})
 public class Step implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
+	private String date;
 	private int number;
-	private Person person;
+	private int personId;
 
 	public Step() {
 	}
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	public String getDate() {
+		return this.date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 
@@ -46,16 +61,12 @@ public class Step implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Person
-	@ManyToOne
-	@JoinColumn(name="personId")
-	@XmlTransient
-	public Person getPerson() {
-		return this.person;
+	public int getPersonId() {
+		return this.personId;
 	}
 
-	public void setPerson(Person person) {
-		this.person = person;
+	public void setPersonId(int personId) {
+		this.personId = personId;
 	}
 	
 	// Database operations
@@ -72,7 +83,7 @@ public class Step implements Serializable {
 		System.out.println("--> Initializing Entity manager...");
 		EntityManager em = LifeCoachDao.instance.createEntityManager();
 		System.out.println("--> Querying the database for all the steps for person with id = "+personId+"...");
-	    List<Step> list = em.createNamedQuery("Steps.findForPerson", Step.class).setParameter(1, personId).getResultList();
+	    List<Step> list = em.createNamedQuery("Step.findForPerson", Step.class).setParameter(1, personId).getResultList();
 		System.out.println("--> Closing connections of entity manager...");
 	    LifeCoachDao.instance.closeConnections(em);
 	    return list;

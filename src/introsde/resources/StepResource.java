@@ -55,23 +55,23 @@ public class StepResource {
 
  	@PUT
  	@Consumes({MediaType.APPLICATION_JSON })
- 	public Response putPerson(Step step) {
+ 	public Response putStep(Step step) {
  		//System.out.println("--> Updating Step... " + this.id);
- 		System.out.println("--> "+step.toString());
+ 		System.out.println("--> Step gotten: "+step.toString());
+ 		System.out.println("--> Step gotten: "+step.getDate());
+ 		System.out.println("--> Step gotten: "+step.getId());
+
+ 		Response res;;
  		
- 		Response res;
- 		res = Response.noContent().build();
- 		/*
- 		Step existing = Step.getStepById(step.getId());
- 		
- 		if (existing == null) {
+ 		if (step.getId() == 0) { // Create step
  			res = Response.noContent().build();
- 		} else {
+ 			Step.saveStep(step);
+ 		} else { // Modify step
  			res = Response.created(uriInfo.getAbsolutePath()).build();
- 			person.setId(this.id);
- 			Person.updatePerson(person);
+ 			//person.setId(this.id);
+ 			//Person.updatePerson(person);
  		}
-		*/
+
  		return res;
  	}
 }

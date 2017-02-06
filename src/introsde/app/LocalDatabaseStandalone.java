@@ -10,7 +10,7 @@ import javax.xml.ws.Endpoint;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class App
+public class LocalDatabaseStandalone
 {
     private static final URI BASE_URI = URI.create("http://localhost:5900/sdelab/");	
     

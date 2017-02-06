@@ -1,11 +1,11 @@
 package introsde.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 import introsde.dao.LifeCoachDao;
-
-import java.util.List;
 
 
 /**
@@ -22,14 +22,13 @@ public class Person implements Serializable {
 	private String city;
 	private String name;
 	private int stepGoal;
-	private List<Step> steps;
 
 	public Person() {
 	}
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
@@ -73,31 +72,6 @@ public class Person implements Serializable {
 
 	public void setStepGoal(int stepGoal) {
 		this.stepGoal = stepGoal;
-	}
-
-
-	//bi-directional many-to-one association to Step
-	@OneToMany(mappedBy="person", fetch=FetchType.EAGER)
-	public List<Step> getSteps() {
-		return this.steps;
-	}
-
-	public void setSteps(List<Step> steps) {
-		this.steps = steps;
-	}
-
-	public Step addStep(Step step) {
-		getSteps().add(step);
-		step.setPerson(this);
-
-		return step;
-	}
-
-	public Step removeStep(Step step) {
-		getSteps().remove(step);
-		step.setPerson(null);
-
-		return step;
 	}
 	
 	// Database operations
