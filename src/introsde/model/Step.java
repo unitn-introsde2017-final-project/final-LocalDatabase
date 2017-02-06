@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 import introsde.dao.LifeCoachDao;
 
@@ -14,21 +15,12 @@ import introsde.dao.LifeCoachDao;
  */
 @Entity
 @Table(name="steps")
-@NamedQueries({
-    @NamedQuery(name="Step.findAll",
-                query="SELECT s FROM Step s"),
-//    @NamedQuery(name="Step.findForPerson",
-//                query="SELECT s FROM Step s WHERE s.personId = ?1"),
-})
-/*@NamedQuery(name="Step.findAll", query="SELECT s FROM Step s")
-@NamedQuery(name="Step.findForPerson", query="SELECT s FROM Step s WHERE s.personId = ?1")*/
+@NamedQuery(name="Step.findAll", query="SELECT s FROM Step s")
 public class Step implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String date;
 	private int number;
-	//private int personId;
-	private Person people;
+	private Person person;
 
 	public Step() {
 	}
@@ -45,15 +37,6 @@ public class Step implements Serializable {
 	}
 
 
-	public String getDate() {
-		return this.date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-
 	public int getNumber() {
 		return this.number;
 	}
@@ -61,28 +44,19 @@ public class Step implements Serializable {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	
-//	public int getPersonId() {
-//		return this.personId;
-//	}
-//
-//	public void setPersonId(int id) {
-//		this.personId = id;
-//	}
 
 
-	//bi-directional many-to-one association to People
-//	@ManyToOne(fetch=FetchType.LAZY)
-//	@JoinColumn(name="personId")
-//	//@Transient
-//	public Person getPeople() {
-//		return this.people;
-//	}
-//
-//	
-//	public void setPeople(Person people) {
-//		this.people = people;
-//	}
+	//bi-directional many-to-one association to Person
+	@ManyToOne
+	@JoinColumn(name="personId")
+	@XmlTransient
+	public Person getPerson() {
+		return this.person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 	
 	// Database operations
 	// Notice that, for this example, we create and destroy and entityManager on each operation. 

@@ -1,11 +1,9 @@
 package introsde.model;
 
-import introsde.dao.LifeCoachDao;
-
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import introsde.dao.LifeCoachDao;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="people")
-@NamedQuery(name="People.findAll", query="SELECT p FROM Person p")
+@NamedQuery(name="Person.findAll", query="SELECT p FROM Person p")
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -24,7 +22,6 @@ public class Person implements Serializable {
 	private String city;
 	private String name;
 	private int stepGoal;
-	//@javax.persistence.Transient
 	private List<Step> steps;
 
 	public Person() {
@@ -77,40 +74,31 @@ public class Person implements Serializable {
 	public void setStepGoal(int stepGoal) {
 		this.stepGoal = stepGoal;
 	}
-	
-	/*public List<Step> getSteps() {
-		return this.steps;
-	}
-	
-	public void setSteps(List<Step> steps) {
-		this.steps = steps;
-	}*/
 
 
 	//bi-directional many-to-one association to Step
-//	@OneToMany(mappedBy="people", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-//	@JsonProperty("steps")
-//	public List<Step> getSteps() {
-//		return this.steps;
-//	}
-//
-//	public void setSteps(List<Step> steps) {
-//		this.steps = steps;
-//	}
+	@OneToMany(mappedBy="person", fetch=FetchType.EAGER)
+	public List<Step> getSteps() {
+		return this.steps;
+	}
 
-	/*public Step addStep(Step step) {
+	public void setSteps(List<Step> steps) {
+		this.steps = steps;
+	}
+
+	public Step addStep(Step step) {
 		getSteps().add(step);
-		step.setPeople(this);
+		step.setPerson(this);
 
 		return step;
 	}
 
 	public Step removeStep(Step step) {
 		getSteps().remove(step);
-		step.setPeople(null);
+		step.setPerson(null);
 
 		return step;
-	}*/
+	}
 	
 	// Database operations
 	// Notice that, for this example, we create and destroy and entityManager on each operation. 
@@ -127,7 +115,7 @@ public class Person implements Serializable {
 		System.out.println("--> Initializing Entity manager...");
 		EntityManager em = LifeCoachDao.instance.createEntityManager();
 		System.out.println("--> Querying the database for all the people...");
-	    List<Person> list = em.createNamedQuery("People.findAll", Person.class).getResultList();
+	    List<Person> list = em.createNamedQuery("Person.findAll", Person.class).getResultList();
 		System.out.println("--> Closing connections of entity manager...");
 	    LifeCoachDao.instance.closeConnections(em);
 	    return list;
@@ -162,5 +150,6 @@ public class Person implements Serializable {
 	    tx.commit();
 	    LifeCoachDao.instance.closeConnections(em);
 	}
+
 
 }
