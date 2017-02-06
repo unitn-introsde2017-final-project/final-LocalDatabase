@@ -4,6 +4,9 @@ import introsde.dao.LifeCoachDao;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 
@@ -21,6 +24,7 @@ public class Person implements Serializable {
 	private String city;
 	private String name;
 	private int stepGoal;
+	//@javax.persistence.Transient
 	private List<Step> steps;
 
 	public Person() {
@@ -73,19 +77,28 @@ public class Person implements Serializable {
 	public void setStepGoal(int stepGoal) {
 		this.stepGoal = stepGoal;
 	}
+	
+	/*public List<Step> getSteps() {
+		return this.steps;
+	}
+	
+	public void setSteps(List<Step> steps) {
+		this.steps = steps;
+	}*/
 
 
 	//bi-directional many-to-one association to Step
-	/*@OneToMany(mappedBy="people")
-	public List<Step> getSteps() {
-		return this.steps;
-	}
+//	@OneToMany(mappedBy="people", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+//	@JsonProperty("steps")
+//	public List<Step> getSteps() {
+//		return this.steps;
+//	}
+//
+//	public void setSteps(List<Step> steps) {
+//		this.steps = steps;
+//	}
 
-	public void setSteps(List<Step> steps) {
-		this.steps = steps;
-	}
-
-	public Step addStep(Step step) {
+	/*public Step addStep(Step step) {
 		getSteps().add(step);
 		step.setPeople(this);
 

@@ -61,6 +61,7 @@ public class PersonResource {
 		if (person == null)
 			throw new RuntimeException("Get: Person with " + id + " not found");
 		System.out.println("Returning person... " + person.getId());
+		//person.setSteps(Step.getStepsForPerson(person.getId()));
 		return person;
 	}
 
