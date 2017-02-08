@@ -68,8 +68,7 @@ public class StepResource {
  			Step.saveStep(step);
  		} else { // Modify step
  			res = Response.created(uriInfo.getAbsolutePath()).build();
- 			//person.setId(this.id);
- 			//Person.updatePerson(person);
+ 			Step.updateStep(step);
  		}
 
  		return res;
