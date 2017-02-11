@@ -32,7 +32,7 @@ Get the list of people in the Database
 ]
 ```
 
-### /sdelab/person/{id}  [GET, PUT]
+### /sdelab/person/{id}  [GET, POST]
 
 Get the details and all the steps related to a person.
 

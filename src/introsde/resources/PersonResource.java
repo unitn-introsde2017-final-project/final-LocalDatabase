@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -52,6 +53,28 @@ public class PersonResource {
 			throw new RuntimeException("Get: Person with " + id + " not found");
 		return new PersonConnected(person);
 		//return person;
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response postPerson(Person person) {
+		System.out.println("--> Updating Person... " +this.id);
+		System.out.println("--> "+person.toString());
+		Person.updatePerson(person);
+		
+		Response res;
+		
+		Person existing = getPersonById(this.id);
+		
+		if (existing == null) {
+			res = Response.noContent().build();
+		} else {
+			res = Response.created(uriInfo.getAbsolutePath()).build();
+			person.setId(this.id);
+			Person.updatePerson(person);
+		}
+
+		return res;
 	}
 
 	@PUT
